@@ -58,10 +58,10 @@ for_line_starting() {
 
 CLEAR="s/.*//"
 STRIP_NEWLINES="s/\n//g"
-MATCH_FIELD="^ *\"_source.([^\"]*)\": (.*)$"
+MATCH_FIELD="^ *\"_source.([^\"]*)\": (.*[^ ]) *$"
 
 START_OBJECT="$(for_line_starting '\{') {$CLEAR; h; b;};"
-HOLD_FIELD_NAME="$(for_line_starting '"') {s/$MATCH_FIELD/\"\1\", /; H; b;};"
+HOLD_FIELD_NAME="$(for_line_starting '"') {s/$MATCH_FIELD/\"\1\",/; H; b;};"
 HOLD_FIELD_VALUE="$(for_line_starting '"') {s/$MATCH_FIELD/\2/; H; b;};"
 END_OBJECT="$(for_line_starting '\}') {g; $STRIP_NEWLINES; p;};"
 END_OBJECT_AND_QUIT="$(for_line_starting '\}') {g; $STRIP_NEWLINES; p; q;};"
